@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="content">
+
+    </div>
+    <script>
+        let current = [];
+        const rootFolder = {
+            name: '/',
+            files: ['rootFile1.txt', 'rootFile3.txt', 'rootFile3.txt'],
+            subfolders: [
+                {
+                    name: '/abc',
+                    files: ['abcFile1.txt', 'abcFile3.txt', 'abcFile3.txt'],
+                    subfolders: [
+                        {
+                            name: '/abc/def',
+                            files: ['defFile1.txt', 'defFile3.txt', 'defFile3.txt'],
+                            subfolders: []
+                        }
+                    ]
+                },
+                {
+                    name: '/ghi',
+                    files: ['ghiFile1.txt', 'ghiFile3.txt', 'ghiFile3.txt'],
+                    subfolders: [
+                        {
+                            name: '/abc/ghi',
+                            files: ['ghiFile1.txt', 'ghiFile3.txt', 'ghiFile3.txt'],
+                            subfolders: []
+                        }
+                    ]
+                }
+            ]
+        };
+
+        show();
+
+        function show() {
+            let currentFolder = rootFolder;
+            for (let choice of current) {
+                currentFolder = currentFolder.subfolders[choice];
+            }
+
+            document.getElementById('content').innerHTML = `
+                Du er i: ${currentFolder.name} <br/>
+                ${currentFolder == rootFolder ? '' :
+                `<a href="javascript:goUp()">ett nivå opp</a><br/>`
+                }
+                Undermapper:
+                    <ul>
+                        ${currentFolder.subfolders.map((f,i) => `
+                        <li><a href="javascript:go(${i})">${f.name}</a></li>`
+                        ).join('')}
+                    </ul>
+                Filer:
+                    <ul>
+                        ${currentFolder.files.map(f => `
+                        <li>${f}</li>`
+                        ).join('')}
+                    </ul>
+                `;
+        }
+
+        function goUp() {
+            current.pop();
+            show();
+        }
+
+        function go(i) {
+            current.push(i);
+            show();
+        }
+    </script>
+</body>
+</html>

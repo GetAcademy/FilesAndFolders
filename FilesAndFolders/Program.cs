@@ -6,7 +6,19 @@ namespace FilesAndFolders
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var myFilesAndFolders = new Folder()
+            {
+                Name = "/",
+                FileNames = new[] { "RootFile1.txt", "RootFile2.txt", "RootFile3.txt"}, 
+                Subfolders = new[]
+                {
+                    new Folder()
+                    {
+                        FileNames = new[] { "AbcFile1.txt", "AbcFile2.txt", "AbcFile3.txt"},
+                    }, 
+                    new Folder() 
+                }
+            };
         }
     }
 }
